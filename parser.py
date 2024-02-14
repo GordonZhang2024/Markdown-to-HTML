@@ -12,9 +12,10 @@ for index, line in enumerate(lines):
             line = line + f'</h{len}>'
             lines[index] = line
 
-    bold = re.search(r'\*\*\w+\*\*\W', line)
+    bold = re.search(r'[\*_]{2}\w+[\*_]{2}', line)
         if bold != None:
-            bold = str(bold.group)
-        
-            print('bold: ', bold)
+            for i in bold.groups:
+                strong = '<strong>' + bold[2:-2] + </strong>
+                line.replace(i, strong)
+            
 print(lines)
