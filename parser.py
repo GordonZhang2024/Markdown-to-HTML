@@ -1,10 +1,14 @@
 import re
+from bs4 import beautifulsoup
 
-def parser(md: list):
+def parser(markdown: list):
     '''
-    md
+    function parser(): convert Markdown to HTML
+        parameter markdown: Markdown type document split by lines
+        return: HTML type document
     '''
-    for index, line in enumerate(md):
+    html = '<html>'
+    for index, line in enumerate(markdown):
     
         h_ = re.match(r'#+ ', line)
         if h_ != None:
@@ -28,5 +32,6 @@ def parser(md: list):
                 line = line.replace(i, em)
 
 
-        md[index] = line
+        markdown[index] = line
+        html.join(line)
 print(lines)
