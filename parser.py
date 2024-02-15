@@ -7,6 +7,7 @@ def parser(markdown: list):
         parameter markdown: Markdown type document split by lines
         return: HTML type document
     '''
+    
     html = '<html>'
     for index, line in enumerate(markdown):
     
@@ -24,7 +25,7 @@ def parser(markdown: list):
                 strong = '<strong>' + i[2:-2] + '</strong>'
                 line = line.replace(i, strong)
 
-        italic = re.findall(r'[\*_][\w\s]+?[\*_]', line)
+        italic = re.findall(r'[\*_][\w\s</>]+?[\*_]', line)
         if italic != None:
             print(italic)
             for i in italic:
@@ -32,6 +33,7 @@ def parser(markdown: list):
                 line = line.replace(i, em)
 
 
-        markdown[index] = line
-        html.join(line)
-print(lines)
+        markdown[index] = line + '<br/>'
+        html = html + line
+    html = html + '</html>'
+    return html
