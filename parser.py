@@ -38,17 +38,17 @@ def parser(markdown: list):
                 em = '<em>' + i[1:-1] + '</em>'
                 line = line.replace(i, em)
 
-        p = re.match(r'[>\s]+\s', line)
-        if p != None:
-            p = str(p.group(0))
-            lenth = len(p) - 1
-            line = line.replace(p, lenth * '<p>')
-            line = line + lenth * '</p>'
+        quote = re.match(r'[>\s]+\s', line)
+        if quote != None:
+            quote = str(quote.group(0))
+            lenth = len(quote) - 1
+            line = line.replace(p, lenth * '<blockquote>')
+            line = line + lenth * '</blockquote>'
 
         code = re.findall(r'`[\w\s</>]+?`', line)
         if code != None:
             for i in code:
-                c = '<code>' + i[1:-1] + '</code>'
+                c = '<q><code>' + i[1:-1] + '</code></q>'
                 line = line.replace(i, c)
         
         markdown[index] = line + '<br/>'
