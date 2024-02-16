@@ -14,6 +14,9 @@ def parser(markdown: list):
     p {
         background: lightgrey;
     }
+    q {
+        background: lightgrey;
+    }
     </style>
 '''
     for index, line in enumerate(markdown):
@@ -42,7 +45,7 @@ def parser(markdown: list):
         if quote != None:
             quote = str(quote.group(0))
             lenth = len(quote) - 1
-            line = line.replace(p, lenth * '<blockquote>')
+            line = line.replace(quote, lenth * '<blockquote>')
             line = line + lenth * '</blockquote>'
 
         code = re.findall(r'`[\w\s</>]+?`', line)
@@ -50,6 +53,8 @@ def parser(markdown: list):
             for i in code:
                 c = '<q><code>' + i[1:-1] + '</code></q>'
                 line = line.replace(i, c)
+
+        
         
         markdown[index] = line + '<br/>'
         html = html + line
