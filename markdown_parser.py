@@ -27,7 +27,7 @@ def parser(markdown: list):
             lenth = len(h_) - 1
             if lenth <= 6:
                 line = line.replace(h_, f'<h{lenth}>')
-                line = line + f'</h{lenth}>'
+                line = line + f'</h{lenth}><hr/>'
 
         bold = re.findall(r'[\*_]{2}[\w\s]+?[\*_]{2}', line)
         if bold != None:
@@ -54,8 +54,12 @@ def parser(markdown: list):
                 c = '<q><code>' + i[1:-1] + '</code></q>'
                 line = line.replace(i, c)
 
-        
-        
+        strikethrough = re.findall(r'~{2}[\w\s]+?~{2}', line)
+        if strikethrough != None:
+            for i in strikethrough:
+                s = '<s>' + i[2:-2] + '</s>'
+                line = line.replace(i, s)
+
         markdown[index] = line + '<br/>'
         html = html + line
     html = html + '</html>'
