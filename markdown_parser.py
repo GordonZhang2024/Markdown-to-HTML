@@ -1,5 +1,5 @@
+#!/usr/bin/python
 import re
-from bs4 import BeautifulSoup
 
 def parser(markdown: list):
     '''
@@ -63,6 +63,5 @@ def parser(markdown: list):
         markdown[index] = line + '<br/>'
         html = html + line
     html = html + '</html>'
-    soup = BeautifulSoup(html, features='html.parser')
-    html = soup.prettify()
     return html
+

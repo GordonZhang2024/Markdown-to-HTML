@@ -1,10 +1,22 @@
-from markdown_parser import *
+#!/usr/bin/python
+from markdown_parser import parser
+from bs4 import BeautifulSoup
+import click
 
-with open('sample.md') as samplemd:
-    sample = samplemd.read().splitlines()
-    
-html = parser(sample)
-print(html)
+@click.group()
+def cli():
+    pass
 
-#with open('sample.html', 'w+') as samplehtml:
-#    samplehtml.writelines(html)
+@cli.command()
+@click.argument('file')
+@click.argument('output_file')
+def convert(file, output_file):
+    with open(file) as f:
+        markdown = f.read().splitlines()
+
+    html = parser(markdown)
+    with open(output_file, 'w+') as o:
+        o.write(html)
+if __name__ == '__main__':
+    cli()
+
