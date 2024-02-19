@@ -5,7 +5,9 @@ import click
 
 @click.group()
 def cli():
-    pass
+    """\
+    Convert Markdown to HTML
+    """
 
 @cli.command()
 @click.argument('file')
@@ -17,6 +19,6 @@ def convert(file, output_file):
     html = parser(markdown)
     with open(output_file, 'w+') as o:
         o.write(html)
+        
 if __name__ == '__main__':
     cli()
-
