@@ -5,9 +5,9 @@ import click
 
 @click.group()
 def cli():
-    """\
+    '''\
     Convert Markdown to HTML
-    """
+    '''
 
 @cli.command()
 @click.argument('file')
