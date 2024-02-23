@@ -1,18 +1,14 @@
 #!/usr/bin/python
 from markdown_parser import parser
-from bs4 import BeautifulSoup
 import click
 
-@click.group()
-def cli():
-    '''\
-    Convert Markdown to HTML
-    '''
-
-@cli.command()
+@click.command()
 @click.argument('file')
 @click.argument('output_file')
 def convert(file, output_file):
+    '''\
+    Convert Markdown to HTML
+    '''
     with open(file) as f:
         markdown = f.read().splitlines()
 
@@ -21,4 +17,5 @@ def convert(file, output_file):
         o.write(html)
         
 if __name__ == '__main__':
-    cli()
+    convert()
+
