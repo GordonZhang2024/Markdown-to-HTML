@@ -21,12 +21,12 @@ def parser(markdown: list):
 '''
     for index, line in enumerate(markdown):
     
-        h_ = re.match(r'#+\s', line)
-        if h_ != None:
-            h_ = str(h_.group(0))
-            lenth = len(h_) - 1
+        head = re.match(r'#+\s', line)
+        if head != None:
+            head = str(head.group(0))
+            lenth = len(head) - 1
             if lenth <= 6:
-                line = line.replace(h_, f'<h{lenth}>')
+                line = line.replace(head, f'<h{lenth}>')
                 line = line + f'</h{lenth}><hr/>'
 
         bold = re.findall(r'[\*_]{2}[\w\s]+?[\*_]{2}', line)
@@ -59,6 +59,18 @@ def parser(markdown: list):
             for i in strikethrough:
                 s = '<s>' + i[2:-2] + '</s>'
                 line = line.replace(i, s)
+
+        link = re.match(r'\[[\w\s]+?\]\([\w\s]+?\)')
+        if link != None:
+            link = str(link.group(0))
+            text = re.match(r'\[[\w\s]+?\]', link)
+            text = text.replace('(', '')
+            text = text.replace(')', '')
+            href = re.match(r'\([\w\s]+?\)', link)
+            href = href.replace('(', '')
+            href = href.replace(')', '')
+            l = f'<a href={href}>{text}</a>'
+            line = line.replace(link, l)
 
         markdown[index] = line + '<br/>'
         html = html + line
