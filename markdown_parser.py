@@ -22,7 +22,7 @@ def parser(markdown: list):
     for index, line in enumerate(markdown):
     
         head = re.match(r'#+\s', line)
-        if head != None:
+        if head:
             head = str(head.group(0))
             lenth = len(head) - 1
             if lenth <= 6:
@@ -30,38 +30,38 @@ def parser(markdown: list):
                 line = line + f'</h{lenth}><hr/>'
 
         bold = re.findall(r'[\*_]{2}[\w\s]+?[\*_]{2}', line)
-        if bold != None:
+        if bold:
             for i in bold:
                 strong = '<strong>' + i[2:-2] + '</strong>'
                 line = line.replace(i, strong)
 
         italic = re.findall(r'[\*_][\w\s</>]+?[\*_]', line)
-        if italic != None:
+        if italic:
             for i in italic:
                 em = '<em>' + i[1:-1] + '</em>'
                 line = line.replace(i, em)
 
         quote = re.match(r'[>\s]+\s', line)
-        if quote != None:
+        if quote:
             quote = str(quote.group(0))
             lenth = len(quote) - 1
             line = line.replace(quote, lenth * '<blockquote>')
             line = line + lenth * '</blockquote>'
 
         code = re.findall(r'`[\w\s</>]+?`', line)
-        if code != None:
+        if code:
             for i in code:
                 c = '<q><code>' + i[1:-1] + '</code></q>'
                 line = line.replace(i, c)
 
         strikethrough = re.findall(r'~{2}[\w\s]+?~{2}', line)
-        if strikethrough != None:
+        if strikethrough:
             for i in strikethrough:
                 s = '<s>' + i[2:-2] + '</s>'
                 line = line.replace(i, s)
 
         link = re.match(r'\[[\w\s]+?\]\([\w\s]+?\)')
-        if link != None:
+        if link:
             link = str(link.group(0))
             text = re.match(r'\[[\w\s]+?\]', link)
             text = text.replace('(', '')
@@ -77,3 +77,8 @@ def parser(markdown: list):
     html = html + '</html>'
     return html
 
+def parser(markdown: str):
+    markdown = markdown.splitlines()
+    html = parser(markdown)
+    return html
+    
