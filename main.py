@@ -2,6 +2,7 @@
 from markdown_parser import parser
 import click
 
+
 @click.command()
 @click.argument('file')
 @click.argument('output_file')
