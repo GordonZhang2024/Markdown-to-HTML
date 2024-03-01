@@ -60,7 +60,7 @@ def parser(markdown: list):
                 s = '<s>' + i[2:-2] + '</s>'
                 line = line.replace(i, s)
 
-        link = re.match(r'\[[\w\s]+?\]\([\w\s]+?\)')
+        link = re.match(r'\[[\w\s]+?\]\([\w\s]+?\)', line)
         if link:
             link = str(link.group(0))
             text = re.match(r'\[[\w\s]+?\]', link)
@@ -77,8 +77,3 @@ def parser(markdown: list):
     html = html + '</html>'
     return html
 
-def parser(markdown: str):
-    markdown = markdown.splitlines()
-    html = parser(markdown)
-    return html
-    
