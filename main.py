@@ -19,4 +19,3 @@ def convert(file, output_file):
         
 if __name__ == '__main__':
     convert()
-

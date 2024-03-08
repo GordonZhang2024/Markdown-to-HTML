@@ -20,7 +20,6 @@ def parser(markdown: list):
     </style>
 '''
     for index, line in enumerate(markdown):
-    
         head = re.match(r'#+\s', line)
         if head:
             head = str(head.group(0))
@@ -75,5 +74,13 @@ def parser(markdown: list):
         markdown[index] = line + '<br/>'
         html = html + line
     html = html + '</html>'
-    return html
+    html = html.replace('<script>', '')\
+               .replace('</script>', '')\
+    
+    quoted_code  = re.findall(r'`{3}[\w\s]+?`{3}')
+    if quoted_code:
+        for i in quoted_code:
+            quoted_code = '<q><code>' + i[3:-3] + '</q></code>'
+            line = line.replace(i, em)
 
+    return html
