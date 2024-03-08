@@ -77,10 +77,10 @@ def parser(markdown: list):
     html = html.replace('<script>', '')\
                .replace('</script>', '')\
     
-    quoted_code  = re.findall(r'`{3}[\w\s]+?`{3}')
+    quoted_code  = re.findall(r'```[\w\s]+?```', line)
     if quoted_code:
         for i in quoted_code:
             quoted_code = '<q><code>' + i[3:-3] + '</q></code>'
-            line = line.replace(i, em)
+            html = line.replace(i, em)
 
     return html
