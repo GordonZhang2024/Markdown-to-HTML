@@ -7,18 +7,7 @@ def parser(markdown: list):
         parameter markdown: Markdown type document split by lines
         return: HTML type document
     '''
-    
-    html = '''\
-<html>
-    <style>
-    p {
-        background: lightgrey;
-    }
-    q {
-        background: lightgrey;
-    }
-    </style>
-'''
+    html = ''    
     for index, line in enumerate(markdown):
         head = re.match(r'#+\s', line)
         if head:
@@ -71,16 +60,32 @@ def parser(markdown: list):
             l = f'<a href={href}>{text}</a>'
             line = line.replace(link, l)
 
-        markdown[index] = line + '<br/>'
+        line = line + '<br/>'
         html = html + line
-    html = html + '</html>'
+    html = '''\
+<html>
+    <style>
+    p {
+        background: lightgrey;
+    }
+    q {
+        background: lightgrey;
+     }
+     code {
+         background: lightgrey;
+     }
+    </style>
+</html>
+'''\
+    + html\
+    + '</html>'
     html = html.replace('<script>', '')\
-               .replace('</script>', '')\
+               .replace('</script>', '')
     
-    quoted_code  = re.findall(r'```[\w\s]+?```', line)
+    quoted_code  = re.findall(r'```[\w\W]+?```', html)
     if quoted_code:
         for i in quoted_code:
-            quoted_code = '<q><code>' + i[3:-3] + '</q></code>'
-            html = line.replace(i, em)
+            quoted_code = '<code>' + i[3:-3] + '</code>'
+            html = html.replace(i, quoted_code)
 
     return html

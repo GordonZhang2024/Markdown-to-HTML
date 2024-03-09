@@ -1,5 +1,5 @@
-sample.md
-sample.html
+*.md
+*.html
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
