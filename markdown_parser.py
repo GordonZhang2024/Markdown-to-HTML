@@ -51,15 +51,24 @@ def parser(markdown: list):
         link = re.match(r'\[[\w\s]+?\]\([\w\s]+?\)', line)
         if link:
             link = str(link.group(0))
-            text = re.match(r'\[[\w\s]+?\]', link)
+            text = re.match(r'\[[\w\s]+?\]', link).group(0)
             text = text.replace('(', '')
             text = text.replace(')', '')
-            href = re.match(r'\([\w\s]+?\)', link)
+            href = re.match(r'\([\w\s]+?\)', link).group(0)
             href = href.replace('(', '')
             href = href.replace(')', '')
             l = f'<a href={href}>{text}</a>'
             line = line.replace(link, l)
 
+        img = re.match(r'!\[\]\([\w\W]+?\)', line)
+        if img:
+            img = str(img.group(0))
+            src = img.replace('![]', '')\
+                     .replace('(', '')\
+                     .replace(')', '')
+            image = f'<img src={src}/>'
+            line = line.replace(img, image)
+        
         line = line + '<br/>'
         html = html + line
     html = '''\
@@ -70,9 +79,6 @@ def parser(markdown: list):
     }
     q {
         background: lightgrey;
-     }
-     code {
-         background: lightgrey;
      }
     </style>
 </html>
